@@ -1,4 +1,5 @@
 import pandas as pd
+import os
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -11,6 +12,7 @@ class DiseaseRiskPredictor:
     def __init__(self, data_path='health_risk_dataset.csv'):
         self.models = {}
         self.scalers = {}
+
         self.diseases = [
             'diabetes', 'hypertension',
             'heart_disease', 'obesity', 'depression'
@@ -35,9 +37,12 @@ class DiseaseRiskPredictor:
             'depression': 'has_depression'
         }
 
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        data_path = os.path.join(base_dir, data_path)
+
         print("📊 Обучение моделей...")
         self.load_and_train(data_path)
-        print("✅ Обучение завершено\n")
+        print("✅ Обучение завершено")
 
     def load_and_train(self, data_path):
         df = pd.read_csv(data_path)
@@ -63,37 +68,10 @@ class DiseaseRiskPredictor:
 
             model.fit(X_train_scaled, y_train)
 
-            acc = model.score(scaler.transform(X_test), y_test)
-            print(f"{disease:<15} | точность: {acc:.2%}")
-
             self.models[disease] = model
             self.scalers[disease] = scaler
 
-    def predict_custom_patient(self):
-        print("\n" + "=" * 60)
-        print("ВВОД ДАННЫХ ПАЦИЕНТА")
-        print("=" * 60)
-
-        user_data = {
-            'age': float(input("Возраст: ")),
-            'gender': int(input("Пол (0-муж, 1-жен): ")),
-            'bmi': float(input("ИМТ: ")),
-            'blood_pressure_sys': float(input("Систолическое давление: ")),
-            'blood_pressure_dia': float(input("Диастолическое давление: ")),
-            'cholesterol': float(input("Холестерин: ")),
-            'glucose': float(input("Глюкоза: ")),
-            'smoking_years': float(input("Стаж курения (лет): ")),
-            'alcohol_consumption': float(input("Алкоголь (ед./нед): ")),
-            'physical_activity': float(input("Физическая активность (ч/нед): ")),
-            'sleep_hours': float(input("Сон (часы): ")),
-            'family_history_diabetes': int(input("Диабет у родственников (0/1): ")),
-            'family_history_heart': int(input("Болезни сердца у родственников (0/1): ")),
-            'stress_level': float(input("Уровень стресса (0-10): "))
-        }
-
-        self.display_predictions(self._predict(user_data))
-
-    def _predict(self, user_data):
+    def predict_from_dict(self, user_data):
         df = pd.DataFrame([user_data])
         results = {}
 
@@ -102,36 +80,14 @@ class DiseaseRiskPredictor:
             prob = self.models[disease].predict_proba(X_scaled)[0, 1]
 
             if prob < 0.3:
-                risk, color = "НИЗКИЙ", "🟢"
+                risk = "low"
             elif prob < 0.6:
-                risk, color = "СРЕДНИЙ", "🟡"
+                risk = "medium"
             elif prob < 0.8:
-                risk, color = "ВЫСОКИЙ", "🟠"
+                risk = "high"
             else:
-                risk, color = "ОЧЕНЬ ВЫСОКИЙ", "🔴"
+                risk = "very-high"
 
-            results[disease] = (prob, risk, color)
+            results[disease] = round(prob * 100, 2), risk
 
         return results
-
-    def display_predictions(self, results):
-        print("\n" + "=" * 60)
-        print("РЕЗУЛЬТАТ АНАЛИЗА")
-        print("=" * 60)
-
-        translate = {
-            'diabetes': 'Диабет',
-            'hypertension': 'Гипертония',
-            'heart_disease': 'Болезни сердца',
-            'obesity': 'Ожирение',
-            'depression': 'Депрессия'
-        }
-
-        for disease, (prob, risk, color) in sorted(
-                results.items(), key=lambda x: x[1][0], reverse=True):
-            print(f"{translate[disease]:<20} | {prob:6.2%} | {color} {risk}")
-
-
-if __name__ == "__main__":
-    predictor = DiseaseRiskPredictor()
-    predictor.predict_custom_patient()
