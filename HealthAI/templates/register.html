@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Регистрация</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="auth-box">
+    <h1>Регистрация</h1>
+
+    <form method="post">
+        <input name="login" placeholder="Логин" required>
+        <input type="password" name="password" placeholder="Пароль" required style="margin-top:14px">
+        <button>Создать аккаунт</button>
+    </form>
+
+    <p class="subtitle" style="text-align:center;margin-top:16px">
+        Уже есть аккаунт? <a href="/login">Войти</a>
+    </p>
+</div>
+
+</body>
+</html>

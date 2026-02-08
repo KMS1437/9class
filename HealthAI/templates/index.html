@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Health Risk Check</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>🧠 Health Risk Check</h1>
+    <p class="subtitle">Быстрая оценка рисков заболеваний</p>
+
+    <form id="healthForm">
+        <div class="grid">
+            <input name="age" placeholder="Возраст" required>
+            <select name="gender">
+                <option value="0">Мужчина</option>
+                <option value="1">Женщина</option>
+            </select>
+            <input name="bmi" placeholder="ИМТ">
+            <input name="bp_sys" placeholder="Давление (сист.)">
+            <input name="bp_dia" placeholder="Давление (диаст.)">
+            <input name="cholesterol" placeholder="Холестерин">
+            <input name="glucose" placeholder="Глюкоза">
+            <input name="smoking" placeholder="Стаж курения">
+            <input name="alcohol" placeholder="Алкоголь (0–10)">
+            <input name="activity" placeholder="Активность (0–10)">
+            <input name="sleep" placeholder="Сон (ч)">
+            <input name="stress" placeholder="Стресс (0–10)">
+            <select name="family_diabetes">
+                <option value="0">Диабет в семье — нет</option>
+                <option value="1">Диабет в семье — да</option>
+            </select>
+            <select name="family_heart">
+                <option value="0">Сердце — нет</option>
+                <option value="1">Сердце — да</option>
+            </select>
+        </div>
+
+        <button>Рассчитать риски</button>
+    </form>
+
+    <div id="results"></div>
+
+    <p class="subtitle" style="margin-top:20px">
+        <a href="/login">Войти</a> · <a href="/register">Регистрация</a>
+    </p>
+</div>
+
+<script>
+document.getElementById("healthForm").onsubmit = async e => {
+    e.preventDefault();
+
+    const data = Object.fromEntries(new FormData(e.target).entries());
+
+    const res = await fetch("/predict", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+    });
+
+    const results = await res.json();
+    const box = document.getElementById("results");
+
+    box.innerHTML = "<h2>Результаты</h2>";
+
+    results.forEach(r => {
+        box.innerHTML += `
+            <div class="result ${r.risk}">
+                <span>${r.name}</span>
+                <strong>${r.probability}%</strong>
+            </div>
+        `;
+    });
+};
+</script>
+
+</body>
+</html>

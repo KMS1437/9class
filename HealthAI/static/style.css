@@ -1,0 +1,175 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Inter", system-ui, sans-serif;
+    background: #f8fafc;
+    min-height: 100vh;
+    padding: 32px 16px;
+    color: #0f172a;
+}
+
+/* ===== Layout ===== */
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+}
+
+/* ===== Typography ===== */
+
+h1 {
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 4px;
+}
+
+.subtitle {
+    color: #64748b;
+    margin-bottom: 28px;
+    font-size: 14px;
+}
+
+/* ===== Forms ===== */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+input,
+select {
+    padding: 14px 14px;
+    border-radius: 12px;
+    border: 1px solid #e5e7eb;
+    font-size: 14px;
+    background: #ffffff;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+input::placeholder {
+    color: #94a3b8;
+}
+
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+}
+
+/* ===== Buttons ===== */
+
+button {
+    margin-top: 28px;
+    width: 100%;
+    padding: 14px;
+    border-radius: 12px;
+    border: none;
+    background: #2563eb;
+    color: white;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+/* ===== Results ===== */
+
+#results {
+    margin-top: 36px;
+}
+
+#results h2 {
+    font-size: 18px;
+    margin-bottom: 12px;
+}
+
+/* Карточка результата */
+.result {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px;
+    margin-top: 10px;
+    border-radius: 12px;
+    font-size: 14px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+/* ===== Risk Levels ===== */
+
+.low {
+    border-left: 4px solid #22c55e;
+}
+
+.medium {
+    border-left: 4px solid #facc15;
+}
+
+.high {
+    border-left: 4px solid #fb923c;
+}
+
+.very-high {
+    border-left: 4px solid #ef4444;
+}
+
+/* ===== Profile / History ===== */
+
+.history-card {
+    margin-top: 16px;
+    padding: 16px;
+    border-radius: 14px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.history-date {
+    font-size: 13px;
+    color: #64748b;
+    margin-bottom: 8px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 14px;
+    border-bottom: 1px dashed #e5e7eb;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+/* ===== Auth ===== */
+
+.auth-box {
+    max-width: 420px;
+    margin: 80px auto;
+    padding: 32px;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+}
+
+.auth-box h1 {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.auth-box button {
+    margin-top: 20px;
+}

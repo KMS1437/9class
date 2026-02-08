@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Личный кабинет</h1>
+    <p class="subtitle">
+        <a href="/">Новая оценка</a> ·
+        <a href="/logout">Выйти</a>
+    </p>
+
+    <h2>История</h2>
+
+    {% if history %}
+        {% for item in history %}
+            <div class="history-card">
+                <div class="history-date">{{ item.date }}</div>
+
+                {% for r in item.result %}
+                    <div class="history-item">
+                        <span>{{ r.name }}</span>
+                        <strong>{{ r.probability }}%</strong>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="subtitle">История пуста</p>
+    {% endif %}
+</div>
+
+</body>
+</html>

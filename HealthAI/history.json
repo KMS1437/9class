@@ -1,0 +1,34 @@
+{
+  "KMS1437": [
+    {
+      "date": "2026-02-08 15:12",
+      "result": [
+        {
+          "name": "Диабет",
+          "probability": 0.97,
+          "risk": "low"
+        },
+        {
+          "name": "Гипертония",
+          "probability": 12.18,
+          "risk": "low"
+        },
+        {
+          "name": "Болезни сердца",
+          "probability": 0.01,
+          "risk": "low"
+        },
+        {
+          "name": "Ожирение",
+          "probability": 0.0,
+          "risk": "low"
+        },
+        {
+          "name": "Депрессия",
+          "probability": 21.8,
+          "risk": "low"
+        }
+      ]
+    }
+  ]
+}
